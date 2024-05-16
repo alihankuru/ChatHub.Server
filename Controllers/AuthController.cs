@@ -3,12 +3,15 @@ using ChatHub.Server.Dtos;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.EntityFrameworkCore;
+using SignInResult=Microsoft.AspNetCore.Identity.SignInResult;
 namespace ChatHub.Server.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AuthController(UserManager<AppUser> userManager) : ControllerBase
+    public class AuthController(
+        UserManager<AppUser> userManager,
+        SignInManager<AppUser> signInManager) : ControllerBase
     {
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDto request, CancellationToken cancellationToken)
@@ -91,7 +94,71 @@ namespace ChatHub.Server.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto request, CancellationToken cancellationToken)
+        {
+            AppUser? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.Email == request.UserNameOrEmail || p.UserName == request.UserNameOrEmail, cancellationToken);
 
+
+            if (appUser is null)
+            {
+                return BadRequest(new { Message = "Kullanıcı Bulunamadı" });
+            }
+
+            bool result=await userManager.CheckPasswordAsync(appUser, request.Password);
+            if (!result) return BadRequest(new { Message = "Şifre Yanlış " });
+
+
+
+            return Ok(new { Token = "Token" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> LoginWithSignInManager(LoginDto request, CancellationToken cancellationToken)
+        {
+            AppUser? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.Email == request.UserNameOrEmail || p.UserName == request.UserNameOrEmail, cancellationToken);
+
+
+            if (appUser is null)
+            {
+                return BadRequest(new { Message = "Kullanıcı Bulunamadı" });
+            }
+
+            SignInResult result=  await signInManager.CheckPasswordSignInAsync(appUser,request.Password,true);
+
+
+            if (result.IsLockedOut)
+            {
+                TimeSpan? timeSpan = appUser.LockoutEnd - DateTime.UtcNow;
+
+                if( timeSpan is not null )
+                {
+                    return StatusCode(500, $"Şifrenizi 3 kere yanlış girdiğiniz için kullanıcınız {timeSpan.Value.TotalSeconds} saniye girişe yasaklanmıştır.");
+                }
+                else
+                {
+                    return StatusCode(500, $"Şifrenizi 3 kere yanlış girdiğiniz için kullanıcınız 30 saniye girişe yasaklanmıştır.");
+
+                }
+            }
+
+            if (!result.Succeeded)
+            {
+                return StatusCode(500, "Şifreniz Yanlış");
+            }
+
+
+            if (result.IsNotAllowed)
+            {
+                return StatusCode(500, "Mail adresiniz onaylı değil");
+            }
+
+           
+
+
+
+            return Ok(new { Token = "Token" });
+        }
 
 
     }

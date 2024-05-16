@@ -12,7 +12,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<ChatDbContext>();
-builder.Services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<ChatDbContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<AppUser, AppRole>(options =>
+{
+
+    options.SignIn.RequireConfirmedEmail = true;
+
+}).AddEntityFrameworkStores<ChatDbContext>().AddDefaultTokenProviders();
 
 
 
