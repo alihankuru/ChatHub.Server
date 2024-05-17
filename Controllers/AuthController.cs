@@ -1,5 +1,6 @@
 ﻿using ChatHub.EntityLayer.Concrete;
 using ChatHub.Server.Dtos;
+using GenericFileService.Files;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,12 +17,16 @@ namespace ChatHub.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterDto request, CancellationToken cancellationToken)
         {
+            string avatar = FileService.FileSaveToServer(request.File, "Images/Avatar/");
             AppUser appUser = new()
             {
                 Email = request.Email,
                 UserName = request.UserName,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
+                Photo=avatar,
+
+
             };
 
             IdentityResult result= await userManager.CreateAsync(appUser,request.Password);
@@ -110,7 +115,7 @@ namespace ChatHub.Server.Controllers
 
 
 
-            return Ok(new { Token = "Token" });
+            return Ok(appUser);
         }
 
         [HttpPost]

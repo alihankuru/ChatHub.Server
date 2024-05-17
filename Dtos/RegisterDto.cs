@@ -6,7 +6,8 @@
         string UserName,
         string FirstName,
         string LastName,
-        string Password
+        string Password,
+        IFormFile File
    );
     
 }
