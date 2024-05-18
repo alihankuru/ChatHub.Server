@@ -109,7 +109,7 @@ namespace ChatHub.Server.Controllers
             {
                 return BadRequest(new { Message = "Kullanıcı Bulunamadı" });
             }
-
+            appUser.Status = "Çevrimiçi";
             bool result=await userManager.CheckPasswordAsync(appUser, request.Password);
             if (!result) return BadRequest(new { Message = "Şifre Yanlış " });
 
