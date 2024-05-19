@@ -15,7 +15,7 @@ namespace ChatHub.Server.Controllers
         SignInManager<AppUser> signInManager) : ControllerBase
     {
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromForm] RegisterDto request, CancellationToken cancellationToken)
         {
             string avatar = FileService.FileSaveToServer(request.File, "Images/Avatar/");
             AppUser appUser = new()
@@ -36,7 +36,7 @@ namespace ChatHub.Server.Controllers
                 return BadRequest(result.Errors);
             }
 
-            return NoContent();
+            return Ok(appUser);
         }
 
 

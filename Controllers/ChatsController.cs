@@ -20,6 +20,14 @@ namespace ChatHub.Server.Controllers
             return Ok(chats);
         }
 
+        [HttpGet("users")]
+        public async Task<IActionResult> GetUsers()
+        {
+            List<AppUser> users = await context.Users.OrderBy(p => p.UserName).ToListAsync();
+
+            return Ok(users);
+        }
+
         [HttpPost]
         public async Task<IActionResult> SendMessage(SendMessageDto request, CancellationToken cancellationToken) {
 
