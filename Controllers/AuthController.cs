@@ -100,7 +100,7 @@ namespace ChatHub.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginDto request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromForm] LoginDto request, CancellationToken cancellationToken)
         {
             AppUser? appUser = await userManager.Users.FirstOrDefaultAsync(p => p.Email == request.UserNameOrEmail || p.UserName == request.UserNameOrEmail, cancellationToken);
 

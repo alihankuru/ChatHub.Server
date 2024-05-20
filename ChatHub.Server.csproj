@@ -24,4 +24,9 @@
     <Folder Include="Images\Avatar\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\avatar\75466932-5495-4d21-97ca-adfbc7401434.jpg" />
+    <None Include="wwwroot\avatar\891be0e3-f576-449a-8134-8291d26877cb.jpg" />
+  </ItemGroup>
+
 </Project>

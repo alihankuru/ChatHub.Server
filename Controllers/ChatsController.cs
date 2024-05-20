@@ -50,7 +50,7 @@ namespace ChatHub.Server.Controllers
                 await hubContext.Clients.Client(userConnection.Key).SendAsync("Messages", chat);
             }
 
-            return Ok();
+            return Ok(chat);
         }
 
 

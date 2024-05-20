@@ -26,7 +26,7 @@ namespace ChatHub.Server.Hubs
         {
             Guid userId;
             Users.TryGetValue(Context.ConnectionId, out userId);
-
+            Users.Remove(Context.ConnectionId);
 
             AppUser? user = await context.Users.FindAsync(userId);
 
