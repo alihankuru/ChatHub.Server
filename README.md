@@ -15,10 +15,9 @@ ChatHub.Server is a powerful, scalable chat server designed to handle high traff
 
 
 # ChatHub.Server
-![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/1.png)
-![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/2.png)
-![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/3.png)
-![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/4.png)
+![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/5.png)
+![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/6.png)
+![ChatHub.Server](https://github.com/alihankuru/ChatHub.Server/blob/master/wwwroot/Images/7.png)
 
 ## Installation
 
